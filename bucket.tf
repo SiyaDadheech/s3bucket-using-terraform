@@ -1,3 +1,4 @@
+
 resource "aws_s3_bucket" "buck-web" {
   bucket = "unique-bucket-by-siya-123400"
 
@@ -42,11 +43,19 @@ resource "aws_s3_bucket_website_configuration" "web_config" {
 resource "aws_s3_bucket_object" "object" {
   bucket = aws_s3_bucket.buck-web.id
   key    = "index.html"
-  content = "<html><h1> Welcome to my website </h1></html>"
+  source = "${path.module}/website/index.html"
   content_type = "text/html"
-
+  source_hash  = filemd5("${path.module}/website/index.html")
 
 }
+
+resource "aws_s3_bucket_object" "css" {
+  bucket       = aws_s3_bucket.buck-web.id
+  key          = "style.css"
+  source       = "${path.module}/website/style.css"
+  content_type = "text/css"
+}
+
 resource "aws_s3_bucket_policy" "public_access" {
   bucket = aws_s3_bucket.buck-web.id
 
