@@ -45,7 +45,7 @@ resource "aws_s3_bucket_object" "object" {
   key    = "index.html"
   source = "${path.module}/website/index.html"
   content_type = "text/html"
-  source_hash  = filemd5("${path.module}/website/index.html")
+  source_hash  = filemd5("${path.module}/website/index.html") // i have modified the changes in index.html. using this it will reflect the changes.
 
 }
 
